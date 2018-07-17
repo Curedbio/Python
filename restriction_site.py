@@ -58,20 +58,22 @@ C"""
 # define enzyme array ([name], [seq])
 enz = [['EcoRI','BamHI','HindIII'], ['GAATTC','GGATC','AAGCT']]
 
-#print(str(enz[0][1]) +" - " + str(enz[1][0]))
+# Add some colour
 
 enz1a = '\033[1;31m' + enz[1][0] + '\033[0m' #red
 enz2a = '\033[1;32m' + enz[1][1] + '\033[0m' #green
 enz3a = '\033[1;35m' + enz[1][2] + '\033[0m' #magenta
 
+#show name - sequence
 print(str(enz[0][0]) +" - " + enz1a)
 print(str(enz[0][1]) +" - " + enz2a)
 print(str(enz[0][2]) +" - " + enz3a)
 
+#count restrictrion sites
 for seq in range(len(enz[0])):
     print
     count = dna.count(enz[1][seq])
     print "There are", count, "restriction sites for enzyme" , enz[0][seq]
 
-print ('\n')
+#highlight restriction sites
 print dna.replace(str(enz[1][0]), enz1a).replace(str(enz[1][1]), enz2a).replace(str(enz[1][2]), enz3a)
