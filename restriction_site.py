@@ -19,8 +19,12 @@
 #
 # Using as example Homo sapiens beta-globin (HBB) gene, complete cds (GenBank: KU350152.1)
 #
-
+import sys
 from string import *
+from termcolor import *
+import colorama
+
+colorama.init()
 
 dna = """ATTCTGGAGACGCAGGAAGAGATCCATCTACATATCCCAAAGCTGAATTATGGTAGACAAAACTCTTCCA
 CTTTTAGTGCATCAACTTCTTATTTGTGTAATAAGAAAATTGGGAAAACGATCTTCAATATGCTTACCAA
@@ -54,31 +58,38 @@ AAACTGGGGGATATTATGAAGGGCCTTGAGCATCTGGATTCTGCCTAATAAAAAACATTTATTTTCATTG
 C"""
 
 
+
 # define enzyme array ([name], [seq])
 enz = [['EcoRI','BamHI','HindIII'], ['GAATT','GGATC','AAGCT']]
 
-# Add some colour
-enz1a = '\033[1;31m' + enz[1][0] + '\033[0m' #red
-enz2a = '\033[1;32m' + enz[1][1] + '\033[0m' #green
-enz3a = '\033[1;35m' + enz[1][2] + '\033[0m' #magenta
+#ecor1=g-aattc ; BamhI=g-gatc; HindIII=a-agctt
 
-#show enzyme - sequence
-print(str(enz[0][0]) +" - " + enz1a)
-print(str(enz[0][1]) +" - " + enz2a)
-print(str(enz[0][2]) +" - " + enz3a)
+# Add some colour
+#enz1a = colored(enz[1][0], color='red', on_color='on_grey')
+enz1a = '\033[1;31m' + enz[1][0] + '\033[0;0m' #red
+enz2a = '\033[1;32m' + enz[1][1] + '\033[0;0m' #green
+enz3a = '\033[1;35m' + enz[1][2] + '\033[0;0m' #magenta
+text = colored('Hello, World!', 'red', attrs=['reverse', 'blink'])
+
+
+#colour enzyme sequence 
+#print(str(enz[0][1]) +' - ' + str(enz[1][0]))
+print(str(enz[0][0]) +' - ' + enz1a)
+print(str(enz[0][1]) +' - ' + enz2a)
+print(str(enz[0][2]) +' - ' + enz3a)
 print ('\r')
 
-#count restrictrion sites inside sequence
+#count restrictrion sites
 for seq in range(len(enz[1])):
     count = dna.count(enz[1][seq])
-    print "There are", count, "restriction sites for enzyme" , enz[0][seq]
+    print 'There are', count, 'restriction sites for enzyme' , enz[0][seq]
 
 #search position sites inside sequence
     total = (int(count))
     hit = 0
     site = dna.find(enz[1][seq])
     while hit != total:
-        print "Restriction site at position %d" % (site)
+        print 'Restriction site at position %d' % (site)
         site = find(dna, enz[1][seq], site + 1)
         hit = hit + 1
         if hit == total:
